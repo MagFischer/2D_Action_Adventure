@@ -1,7 +1,6 @@
 package game;
 
 import javax.sound.sampled.*;
-import java.io.IOException;
 import java.net.URL;
 
 public class Sound {
@@ -9,7 +8,7 @@ public class Sound {
     URL[] soundURL = new URL[30];
 
     public Sound() {
-        soundURL[0] = getClass().getResource("/sound/BlueBoyAdventure.wav");
+        soundURL[0] = getClass().getResource("/sound/Pimpnes.wav");
         soundURL[1] = getClass().getResource("/sound/unlock.wav");
         soundURL[2] = getClass().getResource("/sound/levelup.wav");
         soundURL[3] = getClass().getResource("/sound/fanfare.wav");

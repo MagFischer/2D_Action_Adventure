@@ -6,7 +6,7 @@ public class main {
         JFrame window = new JFrame();
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
-        window.setTitle("(two)Deez Nuts");
+        window.setTitle("Pimpi");
 
         GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
