@@ -25,7 +25,7 @@ public class TileManager {
         tile = new Tile[10];
         mapTileNum = new int[gp.maxWorldCol] [gp.maxWorldRow];
         getTileImage();
-        loadMap("/maps/map02.txt");
+        loadMap("/maps/map03.txt");
 
     }
 
@@ -42,14 +42,16 @@ public class TileManager {
 
         setUp(4, "water01", true);
 
+        setUp(5, "grass00", false);
+
     }
 
-    public  void setUp(int index, String imagePath, boolean collision) {
+    public  void setUp(int index, String imageName, boolean collision) {
         UtilityTool uTool = new UtilityTool();
 
         try {
             tile[index] = new Tile();
-            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imagePath + ".png"));
+            tile[index].image = ImageIO.read(getClass().getResourceAsStream("/tiles/" + imageName + ".png"));
             tile[index].image = uTool.scaleImage(tile[index].image, gp.tileSize, gp.tileSize);
             tile[index]. collision = collision;
 

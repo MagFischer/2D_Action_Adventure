@@ -1,30 +1,28 @@
 package entity;
 
-
 import game.GamePanel;
 import game.KeyHandler;
-import game.UtilityTool;
-
-import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.io.IOException;
 import java.util.Objects;
 
 public class Player extends Entity {
-    GamePanel gp;
-    KeyHandler keyH;
 
+    KeyHandler keyH;
     public final int screenX;
     public final int screenY;
+    int hasKey = 0;
 
-    public int hasKey = 0;
+
 
 
 
     public Player(GamePanel gp, KeyHandler keyH) {
-        this.gp = gp;
+
+        super(gp);
+
         this.keyH = keyH;
+
         screenX = gp.screenWidth/2 - (gp.tileSize/2);
         screenY = gp.screenHeight/2 - (gp.tileSize/2);
 
@@ -36,13 +34,12 @@ public class Player extends Entity {
         solidArea.height = 32;
         solidArea.width = 32;
 
-
         setDefaultValues();
         getPlayerImage();
     }
 
     public void setDefaultValues() {
-        worldX = gp.tileSize * 9 ;
+        worldX = gp.tileSize * 15 ;
         worldY = gp.tileSize * 10;
         speed = 4;
         direction = "front";
@@ -50,34 +47,21 @@ public class Player extends Entity {
 
     public void getPlayerImage() {
 
-        front = setUp("front");
-        back = setUp("back");
-        up1 = setUp("up1");
-        up2 = setUp("up2");
-        down1 = setUp("down1");
-        down2 = setUp("down2");
-        left = setUp("left");
-        left1 = setUp("left1");
-        left2 = setUp("left2");
-        right = setUp("right");
-        right1 = setUp("right1");
-        right2 = setUp("right2");
+        front = setUp("player/front");
+        back = setUp("player/back");
+        up1 = setUp("player/up1");
+        up2 = setUp("player/up2");
+        down1 = setUp("player/down1");
+        down2 = setUp("player/down2");
+        left = setUp("player/left");
+        left1 = setUp("player/left1");
+        left2 = setUp("player/left2");
+        right = setUp("player/right");
+        right1 = setUp("player/right1");
+        right2 = setUp("player/right2");
 
     }
 
-
-    public BufferedImage setUp(String imageName) {
-        UtilityTool uTool = new UtilityTool();
-        BufferedImage image = null;
-
-        try {
-            image = ImageIO.read(getClass().getClassLoader().getResourceAsStream("player/" + imageName + ".png"));
-            image = uTool.scaleImage(image, gp.tileSize, gp.tileSize);
-        }catch(IOException e) {
-            e.printStackTrace();
-        }
-        return image;
-    }
     public void update() {
 
         if (keyH.upPressed == true || keyH.downPressed == true ||
@@ -110,6 +94,9 @@ public class Player extends Entity {
             int objIndex = gp.cChecker.checkObject(this, true);
             pickUpObject(objIndex);
 
+            //check npc collision
+            int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
+            interactNPC(npcIndex);
             //if collision is false, player can move
             if (!collisionON) {
                 switch (direction) {
@@ -151,37 +138,38 @@ public class Player extends Entity {
     public void pickUpObject(int i) {
         if (i != 999) {
             String objectName = gp.obj[i].name;
-
-            switch (objectName) {
+            switch (objectName)  {
                 case "Key" -> {
                     hasKey++;
                     gp.obj[i] = null;
-                    gp.ui.showMessage("You picked up a Key");
                     gp.playSE(1);
                 }
                 case "Door" -> {
                     if(hasKey > 0) {
-                        gp.playSE(3);
                         gp.obj[i] = null;
                         hasKey--;
-                        gp.ui.showMessage("You opened a door");
+                        gp.playSE(1);
                     } else {
-                        gp.ui.showMessage("You need a key");
+                        gp.ui.showMessage("You need a key!");
                     }
                 }
-                case "Boots" -> {
-                    gp.playSE(2);
-                    speed += 1;
-                    gp.obj[i] = null;
-                    gp.ui.showMessage("Speed increased");
-                }
                 case "Chest" -> {
-                    gp.ui.gameFinished = true;
-                    gp.stopMusic();
-                    gp.playSE(3);
-                }
+                    if(hasKey > 0) {
+                        gp.ui.gameFinished = true;
+                        gp.playSE(3);
+                        gp.stopMusic();
 
+                    } else {
+                        gp.ui.showMessage("You need a key!");
+                    }
+                }
             }
+        }
+    }
+
+    public void interactNPC(int i) {
+        if (i != 999) {
+            System.out.println("hitting npc");
         }
     }
 

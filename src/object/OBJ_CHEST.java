@@ -18,5 +18,6 @@ public class OBJ_CHEST extends SuperObject{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        collision = true;
     }
 }
