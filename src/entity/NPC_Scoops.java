@@ -13,6 +13,7 @@ public class NPC_Scoops extends Entity {
         speed = 1;
 
         getImage();
+        setDialouge();
     }
 
 
@@ -58,6 +59,19 @@ public class NPC_Scoops extends Entity {
 
             actionLockCounter = 0;
         }
+    }
+
+    public void speak() {
+
+        //Do character specific stuff
+        super.speak();
+    }
+
+    public void setDialouge() {
+        dialouge[0] = "Wuz good my G";
+        dialouge[1] = "So you´ve come to this island \n for some sweet treasure?";
+        dialouge[2] = "U sure look like you \n could use some money...";
+        dialouge[3] = "Broke ass monkey";
     }
 
 
