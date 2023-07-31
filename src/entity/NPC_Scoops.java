@@ -44,17 +44,17 @@ public class NPC_Scoops extends Entity {
             int i = random.nextInt(100) + 1; //pick a number from 1 to 100
 
             if (i <= 25) {
-                direction = "up";
+                direction = "front";
             }
 
             if (i > 25 &&  i <= 50) {
-                direction = "down";
+                direction = "back";
             }
             if (i > 50  && i <= 75) {
-                direction = "left1";
+                direction = "left";
             }
             if (i > 75) {
-                direction = "right1";
+                direction = "right";
             }
 
             actionLockCounter = 0;
@@ -69,7 +69,7 @@ public class NPC_Scoops extends Entity {
 
     public void setDialouge() {
         dialouge[0] = "Wuz good my G";
-        dialouge[1] = "So you´ve come to this island \n for some sweet treasure?";
+        dialouge[1] = "So you've come to this island \n for some sweet treasure?";
         dialouge[2] = "U sure look like you \n could use some money...";
         dialouge[3] = "Broke ass monkey";
     }

@@ -71,18 +71,16 @@ public class Player extends Entity {
                 direction = "up";
 
             }
-            if (keyH.downPressed == true) {
+             if (keyH.downPressed == true) {
                 direction = "down";
 
             }
-            if (keyH.leftPressed == true) {
+             if (keyH.leftPressed == true) {
                 direction = "left1";
 
             }
-            if (keyH.rightPressed == true) {
+             if (keyH.rightPressed == true) {
                 direction = "right1";
-
-
             }
 
 
@@ -97,6 +95,7 @@ public class Player extends Entity {
             //check npc collision
             int npcIndex = gp.cChecker.checkEntity(this, gp.npc);
             interactNPC(npcIndex);
+
             //if collision is false, player can move
             if (!collisionON) {
                 switch (direction) {
@@ -169,12 +168,12 @@ public class Player extends Entity {
 
     public void interactNPC(int i) {
         if (i != 999) {
-            if (gp.keyH.enterPressed == true) {
+            if (gp.keyH.ePressed == true) {
                 gp.gameState = gp.dialougeState;
                 gp.npc[i].speak();
             }
         }
-        gp.keyH.enterPressed = false;
+        gp.keyH.ePressed = false;
     }
 
     public void draw(Graphics2D g2) {
