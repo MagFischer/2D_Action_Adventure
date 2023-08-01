@@ -1,12 +1,9 @@
 package game;
 
 
-import object.OBJ_KEY;
-
 import java.awt.*;
 import java.io.IOException;
 import java.io.InputStream;
-import java.text.DecimalFormat;
 
 public class UI {
     GamePanel gp;
@@ -16,7 +13,11 @@ public class UI {
     public String message = "";
     int messageCounter = 0;
     public boolean gameFinished = false;
-    public String currentDialouge;
+    public String currentDialogue;
+
+    public int commandNum = 0;
+
+
 
 
 
@@ -44,21 +45,80 @@ public class UI {
         g2.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         g2.setColor(Color.WHITE);
 
-        //playstate
+        //title state
+        if (gp.gameState == gp.titleState) {
+            drawTitleScreen();
+        }
+
+        //play state
         if (gp.gameState == gp.playState) {
             //Do playstate stuff later
             gp.resumeMusic();
         }
 
-        //pausestate
+        //pause state
         if (gp.gameState == gp.pauseState) {
             drawPauseScreen();
             gp.stopMusic();
         }
+
+        //dialogue state
         if (gp.gameState == gp.dialougeState) {
             drawDialougeScreen();
         }
 
+
+
+    }
+
+    public void drawTitleScreen() {
+
+        g2.setColor(Color.BLACK);
+        g2.fillRect(0,0, gp.screenWidth, gp.screenHeight);
+        //Title name
+        g2.setFont(g2.getFont().deriveFont(Font.BOLD, 83F));
+        String text = "Pimpi";
+        int x = getXforCenterText(text);
+        int y = gp.tileSize*3;
+
+        //Shadow
+        g2.setColor(Color.GRAY);
+        g2.drawString(text, x+5, y+5);
+        //Main Color
+        g2.setColor(Color.WHITE);
+        g2.drawString(text, x, y);
+
+        //Pimpi Image
+        x = gp.screenWidth/2 - (gp.tileSize);
+        y += gp.tileSize;
+        g2.drawImage(gp.player.front, x, y, gp.tileSize*2, gp.tileSize*2, null);
+
+        //Menu
+        g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 46F));
+
+        text = "NEW GAME";
+        x = getXforCenterText(text);
+        y = gp.tileSize*8;
+        g2.drawString(text, x, y);
+        if (commandNum == 0 ) {
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        text = "CONTINUE";
+        x = getXforCenterText(text);
+        y = gp.tileSize*9;
+        g2.drawString(text, x, y);
+        if (commandNum == 1 ) {
+            g2.drawString(">", x-gp.tileSize, y);
+        }
+
+        text = "QUIT";
+        x = getXforCenterText(text);
+        y = gp.tileSize*10;
+        g2.drawString(text, x, y);
+        if (commandNum == 2 ) {
+            g2.drawString(">", x-gp.tileSize, y);
+        }
     }
 
     public void drawDialougeScreen() {
@@ -74,7 +134,7 @@ public class UI {
         g2.setFont(g2.getFont().deriveFont(Font.PLAIN, 32F));
         x += gp.tileSize;
         y += gp.tileSize;
-        for (String line : currentDialouge.split("\n")) {
+        for (String line : currentDialogue.split("\n")) {
             g2.drawString(line, x, y);
             y += 40;
         }

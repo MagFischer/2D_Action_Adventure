@@ -7,7 +7,6 @@ import javax.imageio.ImageIO;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-import java.util.Objects;
 
 public class Entity {
 
@@ -37,7 +36,7 @@ public class Entity {
         if (dialouge[dialougeIndex] == null) {
             dialougeIndex = 0;
         }
-        gp.ui.currentDialouge = dialouge[dialougeIndex];
+        gp.ui.currentDialogue = dialouge[dialougeIndex];
         dialougeIndex++;
 
         switch (gp.player.direction) {
