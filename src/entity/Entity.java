@@ -20,10 +20,14 @@ public class Entity {
     public Rectangle solidArea = new Rectangle(0, 0, 48, 48);
     public int solidAreaDefaultX, solidAreaDefaultY;
     public boolean collisionON = false;
-
     public int actionLockCounter;
     String[] dialouge = new String[20];
     int dialougeIndex = 0;
+
+    //Character Status
+    public int maxLife;
+    public int life;
+
 
     public Entity(GamePanel gp) {
         this.gp = gp;

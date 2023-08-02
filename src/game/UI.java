@@ -1,7 +1,11 @@
 package game;
 
 
+import object.OBJ_HEART;
+import object.SuperObject;
+
 import java.awt.*;
+import java.awt.image.BufferedImage;
 import java.io.IOException;
 import java.io.InputStream;
 
@@ -9,6 +13,7 @@ public class UI {
     GamePanel gp;
     Graphics2D g2;
     Font minecraft;
+    BufferedImage heart_full, heart_half, heart_blank;
     public boolean messageOn = false;
     public String message = "";
     int messageCounter = 0;
@@ -32,7 +37,15 @@ public class UI {
         } catch (IOException | FontFormatException ignored) {
 
         }
+
+        //Create HUD Object
+        SuperObject heart = new OBJ_HEART(gp);
+        heart_full = heart.image;
+        heart_half = heart.image2;
+        heart_blank = heart.image3;
     }
+
+
 
     public void showMessage(String text) {
         message = text;
@@ -52,22 +65,53 @@ public class UI {
 
         //play state
         if (gp.gameState == gp.playState) {
-            //Do playstate stuff later
+            drawPlayerLife();
             gp.resumeMusic();
         }
 
         //pause state
         if (gp.gameState == gp.pauseState) {
+            drawPlayerLife();
             drawPauseScreen();
             gp.stopMusic();
         }
 
         //dialogue state
         if (gp.gameState == gp.dialougeState) {
+            drawPlayerLife();
             drawDialougeScreen();
         }
 
+    }
 
+    public void drawPlayerLife() {
+
+        gp.player.life = 5;
+        int x = gp.tileSize/2;
+        int y = gp.tileSize/2;
+
+        //Draw max heart
+        int i = 0;
+        while (i < gp.player.maxLife/2) {
+            g2.drawImage(heart_blank, x, y, null);
+            i++;
+            x += gp.tileSize;
+        }
+
+         x = gp.tileSize/2;
+         y = gp.tileSize/2;
+         i = 0;
+
+         //Draw Current life
+        while (i < gp.player.life) {
+            g2.drawImage(heart_half, x, y, null);
+            i++;
+            if (i < gp.player.life) {
+                g2.drawImage(heart_full, x, y, null);
+            }
+            i++;
+            x += gp.tileSize;
+        }
 
     }
 
